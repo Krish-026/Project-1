@@ -22,10 +22,12 @@ void Book::Newbook()
             break;
         if (BookIdAvailable(tempBid) == 1)
         {
+            cout << "\n\tBook Id Taken : " << tempBid;
             tempBid = -1;
-            cout << "\n\tBook Id Taken";
             cout << "\n\tUse another Id";
-            cout << "\n\tEXIT : Press 1001 " << endl;
+            cout << "\n\tPress Any Key to Continue.";
+            cout << "\n\t***** EXIT : Press 1001 ****** " << endl;
+            getch();
         }
     } while (tempBid == -1);
     if (Book_id == 1001)
@@ -78,10 +80,13 @@ void Book::BookList()
     else
     {
         file.READ; // Reading data from the file
+        int count = 1;
         while (!file.eof())
         {
+            cout << "\n\t\t********** BOOK " << count << " **********\n";
             bookData(); // displaying data
             file.READ;
+            ++count;
         }
         file.close();
         cout.width(25);
@@ -171,7 +176,7 @@ int Book::BookIdAvailable(int tempBid)
 
     if (!file)
     {
-        cout << "\n\tFile doesn't exit" << endl;
+        // cout << "\n\tFile doesn't exit" << endl;
         return 0;
     }
     else
@@ -181,12 +186,12 @@ int Book::BookIdAvailable(int tempBid)
         {
             if (tempBid == Book_id)
             {
-                cout << "BoodIdAvailable Called" << endl;
+                // cout << "BoodIdAvailable Called" << endl;
                 flag = 1;
                 break;
             }
             else{
-                cout << "Check" << endl;
+                // cout << "Check" << endl;
             }
             file.read((char *)this, sizeof(*this));
         }
