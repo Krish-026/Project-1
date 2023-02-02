@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-    system("color A"); // To change the color of the console
+    system("color F"); // To change the color of the console
     int n, ans, ans1, ans2, temp, count1, Tbookid;
     do
     {
