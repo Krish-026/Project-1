@@ -7,10 +7,10 @@ using namespace std;
 void writeBook();
 void displayallb();
 void modifyDetailsb();
-void deleteDetailsb();
-void searchDetailsb();
+// void deleteDetailsb();
 
 fstream file, temp;
+int count = 0;
 
 class Date
 {
@@ -149,7 +149,7 @@ int main()
                     system("pause");
                     break;
                 }
-                
+
                 default:
                 {
                     cout << "####### Wrong Choice #######" << endl;
@@ -174,32 +174,33 @@ int main()
                 {
                 case 1:
                 {
-                    cout << "******** New Entry ********" << endl;
+                    cout << "New Entry" << endl;
                     writeBook();
                     system("pause");
                     break;
                 }
                 case 2:
                 {
+                    cout << "Modify Entry" << endl;
                     modifyDetailsb();
                     system("pause");
                     break;
                 }
                 case 3:
                 {
-                    cout << "Search Data" << endl;
-                    searchDetailsb();
+                    cout << "Search Entry" << endl;
                     system("pause");
                     break;
                 }
                 case 4:
                 {
-                    deleteDetailsb();
+                    cout << "Delete Entry" << endl;
                     system("pause");
                     break;
                 }
                 case 5:
                 {
+                    cout << "View all student detail " << endl;
                     displayallb();
                     system("pause");
                     break;
@@ -212,10 +213,11 @@ int main()
                 }
                 case 7:
                 {
-                    file.open("book.dat", ios::in | ios::trunc);
+                    file.open("bookD.dat", ios::trunc);
                     file.close();
                     break;
                 }
+
                 default:
                 {
                     cout << "####### Wrong Choice #######" << endl;
@@ -362,6 +364,7 @@ void Book::showDetails()
 {
 
     cout << "******* Details Called *******" << endl;
+    cout << "Count : " << ++count << endl;
     cout << "Book  title : " << book.title << endl;
     cout << "Book  author : " << book.author << endl;
     cout << "Book  publisher : " << book.publisher << endl;
@@ -386,23 +389,21 @@ void Book::modifyDetails()
 void writeBook()
 {
     char ch;
-    file.open("book.dat", ios::out | ios::app);
+    file.open("bookD.dat", ios::out | ios::app | ios::binary);
     do
     {
         system("cls");
-        cout << "******** Enter Details **********" << endl;
         bk.inputDetails();
         file.write((char *)&bk, sizeof(Book));
-        cout << "\n\nDo you want to add more record...(y/n?) ";
+        cout << "\nDo you want to add more record... (y/n?)" << endl;
         cin >> ch;
     } while (ch == 'y' || ch == 'Y');
     file.close();
-    cin.get();
 }
 
 void modifyDetailsb()
 {
-    file.open("book.dat", ios::out | ios::in);
+    file.open("bookD.dat", ios::out | ios::in | ios::binary);
     system("cls");
     cout << "******** Enter New Details **********" << endl;
     if (!file)
@@ -441,16 +442,13 @@ void modifyDetailsb()
 void displayallb()
 {
     system("cls");
-    file.open("book.dat", ios::in); // read mode
+    file.open("bookD.dat", ios::in | ios::binary);
     if (!file)
     {
-        cout << "File Could Not Be Open\n";
-        system("pause");
+        cout << "File Could not be Open";
+        cin.get();
         return;
     }
-
-    file.seekg(0, ios::beg); 
-
     while (file.read((char *)&bk, sizeof(Book)))
     {
         bk.showDetails();
@@ -458,47 +456,6 @@ void displayallb()
     file.close();
     cin.get();
 }
-
-void deleteDetailsb()
-{
-    system("cls");
-    cout << "******** Delete Entry ********" << endl;
-    file.open("book.dat", ios::in | ios::out);
-    temp.open("temp.dat", ios::out);
-
-    string title;
-    int flag = 0;
-
-    cout << "Enter book title to remove : ";
-    cin >> title;
-
-    file.seekg(0, ios::beg);
-
-    while (file.read((char *)&bk, sizeof(Book)))
-    {
-        if (title == bk.book.title)
-        {
-            flag++;
-            continue;
-        }
-        temp.write((char *)&bk, sizeof(Book));
-    }
-
-    file.close();
-    temp.close();
-    remove("book.dat");
-    rename("temp.dat", "book.dat");
-
-    if (flag == 1)
-        cout << "Record Deleted" << endl;
-    else
-        cout << "Record not found" << endl;
-
-    cin.get();
-    return;
-}
-
-
 
 
 

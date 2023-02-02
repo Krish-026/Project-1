@@ -2,13 +2,15 @@ void searchDetailsb()
 // {
 //     system("cls");
 //     cout << "******** Search ********" << endl;
-//     file.open("book.dat", ios::binary | ios::in);
+//     file.open("book.dat", ios::in);
 
 //     string title;
 //     int flag = 0;
 
 //     cout << "Enter book title to remove : ";
 //     cin >> title;
+
+//     file.seekg(0, ios::beg);
 
 //     while (file.read((char *)&bk, sizeof(Book)))
 //     {
