@@ -61,11 +61,11 @@ int Display1() // To use arrow keys in the menu
 
         if (pointer <= 0) // To keep the value of i between 1 and 11
         {
-            pointer = 1;
+            pointer = 11;
         }
         else if (pointer > 11)
         {
-            pointer = 11;
+            pointer = 0;
         }
         else;
 

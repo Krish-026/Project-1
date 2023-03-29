@@ -260,7 +260,7 @@ void Member::returnBook(int temp, int bookId)
                 if (book_Code[i] == bookId)
                 {
                     ch = false;
-                    ans1 = B.BookIdAvailable(bookId);
+                    ans1 = returnedBook(member_Code, bookId);
                     book_Code[i] = 0;
                     flag = 1;
                 }

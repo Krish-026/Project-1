@@ -25,8 +25,7 @@ void Book::Newbook()
             cout << "\n\tBook Id Taken : " << tempBid;
             tempBid = -1;
             cout << "\n\tUse another Id";
-            cout << "\n\tPress Any Key to Continue.";
-            cout << "\n\t***** EXIT : Press 1001 ****** " << endl;
+            cout << "\n\t***** EXIT : Write 1001 ****** " << endl;
             getch();
         }
     } while (tempBid == -1);
@@ -190,7 +189,8 @@ int Book::BookIdAvailable(int tempBid)
                 flag = 1;
                 break;
             }
-            else{
+            else
+            {
                 // cout << "Check" << endl;
             }
             file.read((char *)this, sizeof(*this));
@@ -239,7 +239,6 @@ int Book::getMemberCode(int temp, int B_id)
                 }
                 file.seekp(file.tellp() - sizeof(*this));
                 file.WRITE;
-                flag = 1;
             }
             else // Book not Available in Library
             {
@@ -269,11 +268,11 @@ int Book::getMemberCode(int temp, int B_id)
     }
 }
 
-void Book::returnedBook(int tempMCode, int tempBid)
+int Book::returnedBook(int tempMCode, int tempBid)
 {
     system("cls");
     fstream file;
-    int flag = 0, i;
+    int flag = 0;
     file.open("Bdat", ios::in | ios::out | ios::ate | ios::binary);
     file.seekg(0);
     file.READ;
@@ -287,12 +286,15 @@ void Book::returnedBook(int tempMCode, int tempBid)
                 {
                     Member_Code[i] = 0;
                     ++Number_of_Books_Available;
+                    flag = 1;
                 }
             }
+            file.seekp(file.tellp() - sizeof(*this));
+            file.WRITE;
         }
-        file.seekp(file.tellp() - sizeof(*this));
-        flag = 1;
-        break;
+        if (flag == 1)
+            break;
+        file.READ;
     }
     file.close();
     if (flag == 0)
@@ -301,6 +303,7 @@ void Book::returnedBook(int tempMCode, int tempBid)
         cout << left << "\n\tNo such book is stored";
         cout.width(25);
         cout << left << "\n\n\tPress Any Key to go to main Menu.";
+        return flag;
         getch();
     }
     else
@@ -309,6 +312,7 @@ void Book::returnedBook(int tempMCode, int tempBid)
         cout << left << "\n\tBook Returned Successfully!!!!!";
         cout.width(25);
         cout << left << "\n\n\tPress Any Key to go to main Menu.";
+        return flag;
     }
 }
 

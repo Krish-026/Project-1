@@ -32,7 +32,7 @@ public:
     void BookList();
     void Edit_Book(int);
     int getMemberCode(int, int);
-    void returnedBook(int, int);
+    int returnedBook(int, int);
     void EnqureBook();
     void memberIssuedList(int);
 }B;
